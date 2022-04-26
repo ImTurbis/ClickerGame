@@ -1,0 +1,18 @@
+#alert {
+    font-size: 350%;
+    font-family: 'Courier New', Courier, monospace;
+    background-position: center;
+    text-align: center;
+}
+#alert_text {
+    text-align: center;
+    font-size: 240%;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+body {
+    background-color: rgb(66, 84, 85);
+    background-position: center;
+}
+#discord_w {
+    text-align: center;
+}

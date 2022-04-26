@@ -1,0 +1,27 @@
+h1 {
+    text-align: center;
+    font-size: 360%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+h2 {
+    text-align: center;
+    font-size: 180%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: rgb(55, 63, 63);
+    background-position: center;
+}
+
+
+
+#button {
+    text-align: center;
+}
+#puntos {
+    text-align: center;
+}
+#title {
+    text-align: center;
+}
