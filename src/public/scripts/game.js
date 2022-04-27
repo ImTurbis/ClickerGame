@@ -5,6 +5,13 @@ var alias = null
 console.info('[Game] ID del juego: ' + FinallyID)
 
 window.onload=async function() { 
+    //Necesito que hagas una funcion para que obtenga la direccion ip del usuario
+    //Para ello, necesito que hagas una funcion que obtenga la direccion ip del usuario
+    var ip = ''
+    function getIP(json) {
+        console.log(`[IPIFY] La ip publica que se usara para guardar la partida es ${json.ip}`)
+        ip = json.ip
+    }
      //Aqui vamos a establecer las variables de la partida
      var clicks = 0
      var required = 1000;

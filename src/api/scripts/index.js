@@ -1,13 +1,16 @@
-
+import fetch from 'node-fetch';
 
 /**
  * 
- * @param {number} points 
- * @param {number} id 
- * @param {string} alias    
+ * @param {number} points Clicks totales del usuario
+ * @param {number} id Identificador del usuario
+ * @param {string} ip Dirección IP del usuario
+ * @param {string} alias Alias del usuario
+ * @param {string} wins Número de victorias del usuario
+ * @param {string} level_points Numero de clicks en la victoria del usuario
  * @returns 
  */
-export async function sendPoints(points, id, alias) {
+export async function sendPoints(points, id, alias, wins, level_points, ip) {
 
     try {
     const response = await fetch(`http://localhost:1152/api/game/${id}`, {
@@ -18,7 +21,10 @@ export async function sendPoints(points, id, alias) {
         },
         body: JSON.stringify({
             points,
-            alias
+            alias,
+            wins,
+            level_points,
+            ip
         })
     })
     console.info(response)
@@ -28,6 +34,8 @@ export async function sendPoints(points, id, alias) {
             id: data.id,
             points: data.points,
             alias: alias,
+            victorias: data.wins,
+            lever_points: data.level_points,
             response: {
                 error: false,
                 status: 200,
@@ -40,6 +48,8 @@ export async function sendPoints(points, id, alias) {
             id: data.id,
             points: data.points,
             alias: alias,
+            victorias: data.wins,
+            lever_points: data.level_points,
             response: {
                 error: true,
                 status: 500,

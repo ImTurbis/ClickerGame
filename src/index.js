@@ -70,6 +70,10 @@ app.get('/api/game/:id', async function (req, res) {
     }
 })
 
+app.get('/close', function (req, res) {
+    res.sendFile(path.join(__dirname, '/public/view/close.html'))
+})
+
 app.post('/api/game/:id', function (req, res, next) {
     
     const data = req.body;
@@ -83,6 +87,10 @@ app.post('/api/game/:id', function (req, res, next) {
         res.status(404).send(JSON.stringify({ 
             id: req.params.id,
             points: data.points,
+            points: data.points,
+            alias: alias,
+            wins: data.wins,
+            level_points: data.level_points,
             response: {
                 error: true,
                 status: 404,
@@ -95,12 +103,18 @@ app.post('/api/game/:id', function (req, res, next) {
         const db = new megadb.crearDB('players_data', 'api_data')
         db.establecer(req.params.id, {
             points: data.points,
-            alias: alias
+            alias: alias,
+            wins: data.wins,
+            level_points: data.level_points,
+            ip: data.ip
         })
     } catch (err) {
         res.status(500).send(JSON.stringify({ 
             id: req.params.id,
             points: data.points,
+            alias: alias,
+            wins: data.wins,
+            level_points: data.level_points,
             response: {
                 error: true,
                 status: 500,
@@ -113,6 +127,9 @@ app.post('/api/game/:id', function (req, res, next) {
     .send(JSON.stringify({
         id: req.params.id,
         points: data.points,
+        alias: alias,
+        wins: data.wins,
+        level_points: data.level_points,
         response: {
             error: false,
             status: 200,
