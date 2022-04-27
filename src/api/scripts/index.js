@@ -10,7 +10,7 @@
 export async function sendPoints(points, id, alias) {
 
     try {
-    const response = await fetch(`http://dono-01.danbot.host:1114/api/game/${id}`, {
+    const response = await fetch(`http://localhost:1152/api/game/${id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

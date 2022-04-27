@@ -1,1 +1,1 @@
-npm i -g nodemon && npm i && npm audit fix && npm run start
+npm i --save-dev nodemon && npm i && npm audit fix && npm run start

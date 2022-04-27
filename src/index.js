@@ -1,37 +1,55 @@
-const express = require('express')
+import express from 'express'
 const app = express()
-const path = require('path')
-const megadb = require('megadb')
-const bodyParser = require("body-parser");
-const fs = require('fs')
-const escape = require('escape-html');
+import megadb from 'megadb'
+import bodyParser from "body-parser"
+import fs from 'fs'
+import escape from 'escape-html';
+import dontev from 'dotenv'
+dontev.config()
+4
 
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const RateLimit = require('express-rate-limit');
-const limiter = new RateLimit({
-    windowMs: 1*60*1000, // 1 minute
-    max: 100, // limit each IP to 100 requests per windowMs
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.use(limiter);
+import rateLimit from 'express-rate-limit'
+
+const filesRateLimit = rateLimit({
+	windowMs: 1 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+app.use('/private', filesRateLimit);
+app.use('/public', filesRateLimit);
 app.use(bodyParser.json());
 
 app.all('/', function (req, res) {
-    res.redirect(301, '/game')
+    res.redirect(301, '/game/advertencia')
 })
 
 //Aqui voy a tener que dar un aviso sobre el uso de la ip para guardar la partiva
 app.get('/game/advertencia', function (req, res) {
-    res.sendFile(path.join(__dirname + '/public/advertencia.html'))
+    res.sendFile(path.join(__dirname + '/public/view/aviso.html'))
 })
 
-app.get('/private/:file', function (req, res) {
-    fs.existsSync(path.join(__dirname + '/private/' + req.params.file)) ? res.sendFile(path.join(__dirname + '/private/' + req.params.file)) : res.sendFile(path.join(__dirname + '/public/404.html'))
+app.get('*' , function (req, res) {
+    res.sendFile(path.join(__dirname + '/public/view/404.html'))
+})
+
+app.get('/private/:dir/:file', function (req, res) {
+    const IpClient = req.socket.remoteAddress
+    console.warn(IpClient)
+    if(IpClient !== process.env.IP) return res.sendStatus(403)
+    fs.existsSync(path.join(__dirname + `/private/${req.params.dir}/${req.params.file}`)) ? res.sendFile(path.join(__dirname + `/private/${req.params.dir}/${req.params.file}`)) : res.sendFile(path.join(__dirname + '/public/404.html'))
 })
 
 //Necesito insertar todos los archivos de la carpeta public de estilos y scripts que se llamen game
-app.get('/public/:file', function (req, res) {
-    fs.existsSync(path.join(__dirname + '/public/' + req.params.file)) ? res.sendFile(path.join(__dirname + '/public/' + req.params.file)) : res.sendFile(path.join(__dirname + '/public/404.html'))
+app.get('/public/:dir/:file', function (req, res) {
+    fs.existsSync(path.join(__dirname + `/public/${req.params.dir}/${req.params.file}`)) ? res.sendFile(path.join(__dirname + `/public/${req.params.dir}/${req.params.file}`)) : res.sendFile(path.join(__dirname + '/public/404.html'))
 })
 
 app.get('/game', function (req, res) {
@@ -111,4 +129,4 @@ app.get('/api/scripts/index.js', function (req, res) {
 
 
 
-app.listen(1114)
+app.listen(1152)

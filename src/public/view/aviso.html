@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Aviso</title>
+        <link rel="stylesheet" href="/public/styles/aviso.css">
+    </head>
+    <body>
+        <div class="aviso">
+            <h1>Aviso</h1>
+            <h2>La siguiente pagina web necesita usar tu  direccion ip actual para guardar la partida, para evitar ataques DDoS y evitar acceso a archivos provados, deseas contunuar o salir de la pagina?</h2>
+            <div class="botones">
+                <button class="boton1">Continuar</button>
+                <button class="boton2">Salir</button>
+            </div>
+            <script>
+                var boton1 = document.querySelector(".boton1");
+                boton1.addEventListener("click", function(){
+                    window.location.href = "/game";
+                });
+
+                var boton2 = document.querySelector(".boton2");
+                boton2.addEventListener("click", function(){
+                    window.close(); 
+                });
+            </script>
+    </body>
+</html>
