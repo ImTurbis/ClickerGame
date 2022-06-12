@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>clicker game</title>
+        <script src="/public/scripts/gameOpen.js" type="module" async=true></script>
+        
+        <link rel="stylesheet" href="/public/styles/game.css">
+    </head>
+    <body>
+        <div id="game" style="display: none;">
+                
+            <h1> Bienvenido al clicker game </h1>
+            <h2>Clickea tantas veces como puedas</h2>
+            
+            
+            <p>Clicks <span id="puntos"></span></p>
+            <p>Clicks necesarios para ganar <span id="required"></span></p>
+            <p>Victorias <span id="victorias"></span></p>
+            <p>Clicks totales <span id="clicks"></span></p>
+            <p>Clicks por segundo <span id="clicks_per_second"></span></p>
+            <div>
+                <h6>Escribe tu alias aqui abajo</h6>
+                <textarea id="alias">undefined</textarea>
+            </div>
+            <center><button id="boton">Click aca!</button></center>
+            <div id="end_game">
+                
+            </div>
+        </div>
+        <h1 id="loading">Obteniendo la partida...</h1>
+    </body>
+</html>

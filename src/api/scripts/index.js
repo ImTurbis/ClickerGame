@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+
 
 /**
  * 
@@ -58,3 +58,17 @@ export async function sendPoints(points, id, alias, wins, level_points, ip) {
         });
     }
 }
+
+export async function existGame (id) {
+    try {
+        const response = await fetch(`http://localhost:1152/api/game/exist/${id}`)
+        const data = await response.json()
+        console.debug('[API MODULE index.js]' + data)
+        if(data.response.status === 404) return false
+        return true
+    } catch (err) {
+        alert('[API] Error al verificar si existe el juego: ', err)
+        return false
+    }
+}
+

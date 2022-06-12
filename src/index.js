@@ -6,7 +6,8 @@ import fs from 'fs'
 import escape from 'escape-html';
 import dontev from 'dotenv'
 dontev.config()
-4
+
+const db = new megadb.crearDB('players_data', 'api_data')
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -36,9 +37,6 @@ app.get('/game/advertencia', function (req, res) {
     res.sendFile(path.join(__dirname + '/public/view/aviso.html'))
 })
 
-app.get('*' , function (req, res) {
-    res.sendFile(path.join(__dirname + '/public/view/404.html'))
-})
 
 app.get('/private/:dir/:file', function (req, res) {
     const IpClient = req.socket.remoteAddress
@@ -56,12 +54,36 @@ app.get('/game', function (req, res) {
     res.sendFile(path.join(__dirname, '/public/view/game.html'))
 })
 
+app.get('/game/:id', function (req, res) { 
+    res.sendFile(path.join(__dirname, '/public/view/gameOpen.html'))
+ })
+
 app.get('/package.json', function (req, res) {
     res.sendFile(path.join(__dirname, '/../package.json'))
 })
 
+app.get('/api/game/exist/:id', async function (req, res) {
+    const game = db.obtener(req.params.id)
+    if (game) {
+        res.json({
+            response: {
+                error: false,
+                status: 200,
+                message: 'Existe el usuario'
+            }
+        })
+    } else {
+        res.json({
+            response: {
+                error: true,
+                status: 404,
+                message: 'No existe el usuario'
+            }
+        })
+    }
+})
+
 app.get('/api/game/:id', async function (req, res) {
-    const db = new megadb.crearDB('game')
     const game = db.obtener(req.params.id)
     if(!game) {
         res.json({ error: 'No existe el juego' +  escape(req.params.id) })
@@ -69,6 +91,8 @@ app.get('/api/game/:id', async function (req, res) {
         res.status(200).json(game)
     }
 })
+
+
 
 app.get('/close', function (req, res) {
     res.sendFile(path.join(__dirname, '/public/view/close.html'))
@@ -100,7 +124,6 @@ app.post('/api/game/:id', function (req, res, next) {
     } else {
     try {
         console.log(data)
-        const db = new megadb.crearDB('players_data', 'api_data')
         db.establecer(req.params.id, {
             points: data.points,
             alias: alias,
@@ -144,6 +167,8 @@ app.get('/api/scripts/index.js', function (req, res) {
     res.sendFile(path.join(__dirname, '/api/scripts/index.js'))
 })
 
-
+app.get('*' , function (req, res) {
+    res.sendFile(path.join(__dirname + '/public/view/404.html'))
+})
 
 app.listen(1152)
