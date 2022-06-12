@@ -5,9 +5,13 @@ import bodyParser from "body-parser"
 import fs from 'fs'
 import escape from 'escape-html';
 import dontev from 'dotenv'
+import meow from 'meowdb'
+const db = new meow({
+    name: 'meowdb',
+    dir: './db'
+})
 dontev.config()
 
-const db = new megadb.crearDB('players_data', 'api_data')
 
 import path from 'path';
 import { fileURLToPath } from 'url';
