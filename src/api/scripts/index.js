@@ -10,19 +10,19 @@
  * @param {string} level_points Numero de clicks en la victoria del usuario
  * @returns 
  */
-export async function sendPoints(points, id, alias, wins, level_points, ip) {
+export async function sendPoints(points, id, alias, wins, required, level_points, ip) {
 
     try {
     const response = await fetch(`http://localhost:1152/api/game/${id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-
         },
         body: JSON.stringify({
             points,
             alias,
             wins,
+            required,
             level_points,
             ip
         })
@@ -36,6 +36,7 @@ export async function sendPoints(points, id, alias, wins, level_points, ip) {
             alias: alias,
             victorias: data.wins,
             lever_points: data.level_points,
+            required: data.required,
             response: {
                 error: false,
                 status: 200,
@@ -50,6 +51,7 @@ export async function sendPoints(points, id, alias, wins, level_points, ip) {
             alias: alias,
             victorias: data.wins,
             lever_points: data.level_points,
+            required: data.required,
             response: {
                 error: true,
                 status: 500,
@@ -67,8 +69,18 @@ export async function existGame (id) {
         if(data.response.status === 404) return false
         return true
     } catch (err) {
-        alert('[API] Error al verificar si existe el juego: ', err)
+        alert(`[API] Error al verificar si existe el juego: ${err}`)
         return false
     }
 }
 
+export async function getGame (id) {
+    try {
+        const response = await fetch(`http://localhost:1152/api/game/${id}`)
+        console.debug('[API MODULE index.js]' + response)
+        return response 
+    } catch (err) {
+        console.warn(`[API] Error al obtener el juego: ${err}`)
+        return false
+    }
+}

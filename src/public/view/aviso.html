@@ -16,13 +16,15 @@
             <script>
                 var boton1 = document.querySelector(".boton1");
                 boton1.addEventListener("click", function(){
-                    window.location.href = "/game";
+                    location.replace('/game')
                 });
 
                 var boton2 = document.querySelector(".boton2");
                 boton2.addEventListener("click", function(){
-                    window.open("/", "_self").top.close()
+                    window.open("about:blank", "_self").close()
+                    
 
+                
                 });
             </script>
     </body>

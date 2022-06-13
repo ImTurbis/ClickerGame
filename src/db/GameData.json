@@ -1,0 +1,41 @@
+{
+  "1213033278145724": { "points": 0, "alias": "undefined" },
+  "1134205957845172": {
+    "points": 0,
+    "alias": "undefined",
+    "wins": 0,
+    "level_points": 0,
+    "ip": "0.0.0.0"
+  },
+  "849618206497958": {
+    "points": 5,
+    "alias": "undefined",
+    "wins": 5,
+    "level_points": 32000,
+    "ip": "177.245.150.63"
+  },
+  "70207671745590": {
+    "points": 6,
+    "alias": "undefined",
+    "wins": 6,
+    "level_points": 124478570,
+    "required": 64000,
+    "ip": "177.245.150.63"
+  },
+  "704756390199435": {
+    "points": 16,
+    "alias": "nevergona",
+    "wins": 15,
+    "level_points": 124478571,
+    "required": 32768000,
+    "ip": "177.245.150.63"
+  },
+  "1374945563692786": {
+    "points": 0,
+    "alias": "undefined",
+    "wins": 0,
+    "level_points": 100000,
+    "required": 1000,
+    "ip": "177.245.150.63"
+  }
+}
