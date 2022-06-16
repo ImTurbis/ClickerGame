@@ -6,7 +6,9 @@ import escape from "escape-html";
 import dontev from "dotenv";
 import meow from "meowdb";
 import morgan from "morgan";
-const db = new meow({
+import routerGame from "./routes/game/gameRoutes";
+import routerData from "./routes/data/dataRoutes";
+export const db = new meow({
   name: "GameData",
   dir: "src/db",
 });
@@ -31,48 +33,14 @@ app.use("/private", filesRateLimit);
 app.use("/public", filesRateLimit);
 app.use(bodyParser.json());
 app.use(morgan("combined"));
+app.use('/game', routerGame);
+app.use('/', routerData);
 
 app.all("/", function (req, res) {
-  res.redirect(301, "/game/advertencia");
+  res.redirect(301, "/game/");
 });
 
-//Aqui voy a tener que dar un aviso sobre el uso de la ip para guardar la partiva
-app.get("/game/advertencia", function (req, res) {
-  res.sendFile(path.join(__dirname + "/public/view/aviso.html"));
-  console.log(req.headers);
-});
 
-app.get("/private/:dir/:file", function (req, res) {
-  const IpClient = req.socket.remoteAddress;
-  console.warn(IpClient);
-  if (IpClient !== process.env.IP) return res.sendStatus(403);
-  fs.existsSync(
-    path.join(__dirname + `/private/${req.params.dir}/${req.params.file}`)
-  )
-    ? res.sendFile(
-        path.join(__dirname + `/private/${req.params.dir}/${req.params.file}`)
-      )
-    : res.sendFile(path.join(__dirname + "/public/404.html"));
-});
-
-//Necesito insertar todos los archivos de la carpeta public de estilos y scripts que se llamen game
-app.get("/public/:dir/:file", function (req, res) {
-  fs.existsSync(
-    path.join(__dirname + `/public/${req.params.dir}/${req.params.file}`)
-  )
-    ? res.sendFile(
-        path.join(__dirname + `/public/${req.params.dir}/${req.params.file}`)
-      )
-    : res.sendFile(path.join(__dirname + "/public/404.html"));
-});
-
-app.get("/game", function (req, res) {
-  res.sendFile(path.join(__dirname, "/public/view/game.html"));
-});
-
-app.get("/game/:id", function (req, res) {
-  res.sendFile(path.join(__dirname, "/public/view/gameOpen.html"));
-});
 
 app.get("/package.json", function (req, res) {
   res.sendFile(path.join(__dirname, "/../package.json"));

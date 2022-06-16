@@ -12,8 +12,6 @@ async function loadGame (dataResponse) {
     return location.replace('/game')
   }
 
-
-
   const dataGame = await dataResponse.json()
   console.log('[Game] Datos de la partida: ')
   console.log(dataGame)
@@ -39,19 +37,36 @@ async function loadGame (dataResponse) {
   const required_text = document.getElementById('required')
   const wins_text = document.getElementById('victorias')
   const contador_text = document.getElementById('puntos')
+  const button = document.getElementById('boton')
 
-  contador_text.innerHTML = contador;
-  required_text.innerHTML = required;
-  wins_text.innerHTML = wins;
-  points_text.innerHTML = clicks;
-  clicks_in_sconds_text.innerHTML = clicks_in_sconds;
+  const TimeOutClicksCalculator = setInterval(() => {
+    clicks_in_sconds_text=clicks_in_sconds / seconds;
+  }, 1000)
 
-  if(wins <= 15) {
-    
-  } else {
-    alert('Has ganado!')
+  button.onclick=function() {
 
+    is_active = true;
+    clicks_in_sconds++
+
+    contador_text.innerHTML = contador;
+    required_text.innerHTML = required;
+    wins_text.innerHTML = wins;
+    points_text.innerHTML = clicks;
+
+    if(wins <= 15) {
+        if(required <= contador) {
+            wins++
+            contador = 0
+            required = required ^ 2
+        }
+        contador++
+        clicks++
+    } else {
+        
+
+    }
   }
+
 
   window.onerror = function(error) {
     
