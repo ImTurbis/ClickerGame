@@ -21,6 +21,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 import rateLimit from "express-rate-limit";
+import { routesApi } from "./routes/api/apiRoutes";
 
 const filesRateLimit = rateLimit({
   windowMs: 1 * 60 * 1000, // 15 minutes
@@ -35,6 +36,7 @@ app.use(bodyParser.json());
 app.use(morgan("combined"));
 app.use('/game', routerGame);
 app.use('/', routerData);
+app.use('/api', routesApi);
 
 app.all("/", function (req, res) {
   res.redirect(301, "/game/");
@@ -44,27 +46,6 @@ app.all("/", function (req, res) {
 
 app.get("/package.json", function (req, res) {
   res.sendFile(path.join(__dirname, "/../package.json"));
-});
-
-app.get("/api/game/exist/:id", async function (req, res) {
-  const game = db.get(req.params.id);
-  if (game) {
-    res.json({
-      response: {
-        error: false,
-        status: 200,
-        message: "Existe el usuario",
-      },
-    });
-  } else {
-    res.json({
-      response: {
-        error: true,
-        status: 404,
-        message: "No existe el usuario",
-      },
-    });
-  }
 });
 
 app.get("/api/game/:id", async function (req, res) {
